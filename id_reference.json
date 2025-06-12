@@ -1,0 +1,108 @@
+[
+    {
+      "category_name": "WINS (Category ID: 1286)",
+      "subcategories": [
+        "Regular Season Wins (ID: 17455)",
+        "Most Wins (ID: 13365)",
+        "Fewest Wins (ID: 13367)",
+        "Undefeated (ID: 13360)",
+        "0-17 (ID: 13368)"
+      ]
+    },
+    {
+      "category_name": "FUTURES (Category ID: 529)",
+      "subcategories": [
+        "Champion (ID: 10500)",
+        "Conference Winner (ID: 4651)",
+        "Division Winner (ID: 5629)",
+        "Name the Finalists (ID: 7302)",
+        "Stage of Elimination (ID: 9159)",
+        "Number 1 Seed (ID: 10107)",
+        "Exact Result (ID: 10249)",
+        "Winning Conference (ID: 15901)",
+        "Champion Specials (ID: 6447)"
+      ]
+    },
+    {
+      "category_name": "AWARDS (Category ID: 787)",
+      "subcategories": [
+        "MVP (ID: 13339)",
+        "OPOY (Offensive Player of the Year) (ID: 13340)",
+        "DPOY (Defensive Player of the Year) (ID: 13341)",
+        "OROY (Offensive Rookie of the Year) (ID: 13342)",
+        "DROY (Defensive Rookie of the Year) (ID: 13343)"
+      ]
+    },
+    {
+      "category_name": "PLAYER FUTURES (Category ID: 1759)",
+      "subcategories": [
+        "Passing Yards (ID: 17147)",
+        "Passing TDs (ID: 17148)",
+        "Rushing Yards (ID: 17223)",
+        "Rushing TDs (ID: 17224)",
+        "Receiving Yards (ID: 17314)",
+        "Receiving TDs (ID: 17315)",
+        "Sacks (ID: 17316)"
+      ]
+    },
+    {
+      "category_name": "ROOKIE WATCH (Category ID: 1801)",
+      "subcategories": [
+          "Passing Yards (ID: 17729)",
+          "Passing TDs (ID: 17730)",
+          "Receiving Yards (ID: 17732)",
+          "Receiving TDs (ID: 17733)",
+          "Rushing Yards (ID: 17734)",
+          "Rushing TDs (ID: 17735)",
+          "Sacks (ID: 17736)",
+          "Defensive Ints (ID: 17737)"
+      ]
+    },
+    {
+      "category_name": "STAT LEADERS (Category ID: 1595)",
+      "subcategories": [
+        "Pass Yards (ID: 15379)",
+        "Rush Yards (ID: 15380)",
+        "Rec Yards (ID: 15381)"
+      ]
+    },
+    {
+      "category_name": "PLAYOFFS (Category ID: 1076)",
+      "subcategories": [
+        "To Make the Playoffs (ID: 15399)",
+        "To Miss the Playoffs (ID: 15398)",
+        "Make Playoff Parlays (ID: 17717)",
+        "Make/Miss Playoff Parlays (ID: 17825)"
+      ]
+    },
+    {
+      "category_name": "DIVISION SPECIALS (Category ID: 820)",
+      "subcategories": [
+          "Division Standings (ID: 13041)",
+          "1-2 Exact (ID: 13141)",
+          "Top 2 (ID: 11781)",
+          "Exact Order (ID: 13163)"
+      ]
+    },
+    {
+      "category_name": "TEAM SPECIALS (Category ID: 863)",
+      "subcategories": [
+          "This category contains one subcategory for each NFL team.",
+          "Example: ARI Cardinals (ID: 8493), ATL Falcons (ID: 8494), etc."
+      ]
+    },
+    {
+      "category_name": "GAME-SPECIFIC (Category IDs are for individual games)",
+      "subcategories": [
+          "Game Lines (ID: 492)",
+          "TD Scorers (ID: 1003)",
+          "Passing Props (ID: 1000)",
+          "Receiving Props (ID: 1342)",
+          "Rushing Props (ID: 1001)",
+          "Game Props (ID: 528)",
+          "Team Props (ID: 530)",
+          "Halves (ID: 526)",
+          "Quarters (ID: 527)"
+      ]
+    }
+  ]
