@@ -4,6 +4,16 @@ This Python GUI application retrieves and displays NFL futures data from the Dra
 
 ---
 
+## Installation (Recommended Method)
+
+For most users, the easiest way to use this application is to download the pre-built program.
+
+1.  Go to the [Releases page](https://github.com/yzRobo/draftkings_api_explorer/releases) on GitHub.
+2.  Under the latest release, download the `DK_API_Scraper_vX.X.X.exe` file.
+3.  Run the downloaded `.exe` file. No further setup is required.
+
+---
+
 ## Features
 
 - **Graphical User Interface (GUI)** using Tkinter
