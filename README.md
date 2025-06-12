@@ -4,13 +4,58 @@ This Python GUI application retrieves and displays NFL futures data from the Dra
 
 ---
 
-## Installation (Recommended Method)
+## How to Run
 
-For most users, the easiest way to use this application is to download the pre-built program.
+There are three ways to use this application, depending on your preference.
+
+### Option 1: Standalone Program (Recommended for Windows)
+
+For most users, the easiest method is to use the pre-built `.exe` file. No Python installation is needed.
 
 1.  Go to the [Releases page](https://github.com/yzRobo/draftkings_api_explorer/releases) on GitHub.
-2.  Under the latest release, download the `DK_API_Scraper_vX.X.X.exe` file.
-3.  Run the downloaded `.exe` file. No further setup is required.
+2.  Download the `DK_API_Scraper_vX.X.X.exe` file from the latest release.
+3.  Run the downloaded file.
+
+---
+
+### Option 2: Running from Source (with `run.bat` for Windows)
+
+This option is for users who download the source code and want a simple way to run it on Windows without using the command line.
+
+1.  Make sure you have Python installed on your system.
+2.  Download or clone the project repository.
+3.  Install the required dependencies by opening a terminal or command prompt in the project folder and running:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  Once dependencies are installed, simply double-click the `run.bat` file to start the application.
+
+---
+
+### Option 3: Running from Source (Manual)
+
+This method works for all operating systems (Windows, macOS, Linux) and is the standard way to run a Python application from source.
+
+1.  Ensure you have Python installed.
+2.  Download or clone the project repository.
+3.  It is highly recommended to create and activate a virtual environment:
+    ```bash
+    # For Windows
+    python -m venv venv
+    venv\Scripts\activate
+
+    # For macOS/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+4.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  Run the application from your terminal:
+    ```bash
+    python dk_api_gui_explorer.py
+    ```
 
 ---
 
@@ -41,51 +86,11 @@ For most users, the easiest way to use this application is to download the pre-b
 - `pandas`
 - `curl_cffi`
 
-Install dependencies using pip:
-
-```bash
-pip install pandas curl_cffi
-```
-
 ---
 
-## Setup
+### Explorer Tab
 
-It’s recommended to use a virtual environment:
-
-### macOS/Linux
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Windows
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-To deactivate:
-
-```bash
-deactivate
-```
-
----
-
-## Usage
-
-Run the GUI:
-
-```bash
-python dk_api_gui_explorer.py
-```
-
-### Viewer Tab
+![explorer](https://github.com/user-attachments/assets/98c478d7-3d9b-4a04-a3c9-0821de81ca19)
 
 1. **Input Fields:**
    - League ID (e.g., `88808` for NFL)
@@ -96,6 +101,8 @@ python dk_api_gui_explorer.py
 4. Click “Save Results” to export the latest data to a CSV file.
 
 ### ID Reference Tab
+
+![id_reference](https://github.com/user-attachments/assets/b8388e0a-2085-42ee-9373-89b3f8c83a60)
 
 - Browse through categories and subcategories with corresponding IDs.
 - Click any ID entry to auto-populate the Viewer tab’s input fields.
@@ -162,11 +169,15 @@ The IDs are automatically extracted using regex when clicked, and populate the V
 ## File Structure
 
 ```
-.
-├── dk_api_gui_explorer.py   # Main script with GUI
-├── id_reference.json        # Local file for category/subcategory reference
-├── requirements.txt         # (Optional) Dependency list
-└── README.md
+draftkings_api_explorer/
+│
+├── .gitignore               # Specifies intentionally untracked files to ignore
+├── config.json              # Configuration file for API endpoints
+├── dk_api_gui_explorer.py   # The main application script with the GUI
+├── id_reference.json        # Reference data for market categories and IDs
+├── LICENSE                  # The MIT License for the project
+├── README.md                # The project's documentation file
+└── requirements.txt         # A list of the Python packages required
 ```
 
 ---
@@ -175,7 +186,6 @@ The IDs are automatically extracted using regex when clicked, and populate the V
 
 - Correct Formatting of more API categories to ensure output looks correct
 - Add support for retrieving data across multiple subcategory IDs
-- Improve error handling and logging granularity
 
 ---
 
