@@ -4,16 +4,36 @@ import threading
 import queue
 import json
 import re
+import os
+import sys
 from curl_cffi import requests as cffi_requests
 import pandas as pd
 from typing import Dict, Any, List, Tuple, Optional, Set
 from collections import defaultdict, Counter
 
+# --- HELPER FUNCTION FOR PYINSTALLER ---
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 # --- REFERENCE DATA LOADER ---
 def load_and_format_reference_data() -> List[Dict]:
+    """Loads reference data from the bundled JSON file."""
     try:
-        with open('id_reference.json', 'r') as f: return json.load(f)
-    except Exception: return []
+        # Use resource_path to find the file in dev or in the bundled .exe
+        path = resource_path('id_reference.json')
+        with open(path, 'r') as f: 
+            return json.load(f)
+    except Exception as e:
+        # If there's an error, we can show it for debugging
+        messagebox.showerror("Error Loading Data", f"Could not load id_reference.json.\n\nError: {e}")
+        return []
 
 # --- DYNAMIC STRUCTURE ANALYZER ---
 class StructureAnalyzer:

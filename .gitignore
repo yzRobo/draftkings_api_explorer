@@ -49,3 +49,4 @@ Desktop.ini
 
 # Jupyter Notebooks (if any added later)
 .ipynb_checkpoints/
+*.exe
