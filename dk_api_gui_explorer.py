@@ -483,7 +483,7 @@ class ScraperApp:
         self.notebook.pack(expand=True, fill='both', padx=10, pady=10)
         
         self.scraper_tab = ttk.Frame(self.notebook)
-        self.notebook.add(self.scraper_tab, text='Scraper')
+        self.notebook.add(self.scraper_tab, text='Explorer')
         self.setup_scraper_tab()
         
         self.reference_tab = ttk.Frame(self.notebook)

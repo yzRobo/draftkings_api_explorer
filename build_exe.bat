@@ -3,17 +3,29 @@
 ::  Batch file to build a single executable and clean up build files
 ::
 ::  This script will:
-::  1. Activate the Python virtual environment ('venv').
-::  2. Install/update PyInstaller.
-::  3. Run PyInstaller to bundle the script and data files into one .exe.
-::  4. Clean up the temporary build folder and .spec file upon success.
+::  1. Prompt the user for a version number.
+::  2. Activate the Python virtual environment ('venv').
+::  3. Install/update PyInstaller.
+::  4. Run PyInstaller to bundle the script and data files into one .exe.
+::  5. Clean up the temporary build folder and .spec file upon success.
 :: ============================================================================
 
-TITLE DraftKings API Scraper Builder
+TITLE DraftKings API Explorer Builder
+
+:: -------- VERSION PROMPT --------
+echo.
+set /p "VERSION=Enter version number for this build (e.g., 0.1.0): "
+if "%VERSION%"=="" (
+    echo No version entered. Exiting.
+    pause
+    exit /b 1
+)
+:: ------------------------------
 
 :: Set the name of the virtual environment directory
-set VENV_DIR=venv
-set SPEC_FILE=dk_api_gui_explorer.spec
+set "VENV_DIR=venv"
+set "OUTPUT_NAME=DK_API_EXPLORER_v%VERSION%"
+set "SPEC_FILE=%OUTPUT_NAME%.spec"
 
 :: Check if the virtual environment exists
 if not exist "%VENV_DIR%\Scripts\activate.bat" (
@@ -37,15 +49,16 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo Starting the build process... This may take a few minutes.
+echo Starting the build process for version %VERSION%... This may take a few minutes.
 echo.
 
 :: Run PyInstaller
 :: --onefile: Bundles everything into a single executable.
 :: --windowed: Prevents a console window from appearing when the GUI is run.
 :: --add-data: Includes necessary data files (like your JSON reference and config).
-:: The syntax is "source_file;destination_in_bundle"
-pyinstaller --onefile --windowed --add-data "id_reference.json;." --add-data "config.json;." "dk_api_gui_explorer.py"
+:: --name: Sets the output file name.
+pyinstaller --onefile --windowed --add-data "id_reference.json;." --add-data "config.json;." --name "%OUTPUT_NAME%" "dk_api_gui_explorer.py"
+
 
 :: Check if the build was successful
 if %errorlevel% neq 0 (
@@ -76,7 +89,7 @@ echo ==================================================================
 echo.
 echo The final executable file can be found in the 'dist' folder:
 echo.
-echo     %cd%\dist\dk_api_gui_explorer.exe
+echo     %cd%\dist\%OUTPUT_NAME%.exe
 echo.
 echo You can share this single .exe file with others.
 echo.

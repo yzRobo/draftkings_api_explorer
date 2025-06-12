@@ -1,4 +1,4 @@
-# DraftKings NFL Futures Data Viewer
+# DraftKings NFL API Data Viewer
 
 This Python GUI application retrieves and displays NFL futures data from the DraftKings API. It is designed to help users easily extract and organize betting market information, such as Regular Season Wins, Awards, Player Props, and more.
 
