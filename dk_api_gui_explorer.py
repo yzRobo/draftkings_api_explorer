@@ -415,47 +415,67 @@ def _detect_market_type_from_analysis(analysis: Dict[str, Any], category_id: str
 
 # --- SMART PIVOT HANDLER ---
 def apply_smart_formatting(df: pd.DataFrame, market_type: str, analysis: Dict) -> pd.DataFrame:
-    """Apply smart formatting based on market type and structure"""
+    """
+    Apply smart formatting based on market type and structure.
+    For over/under markets, this function now identifies the main line by finding the
+    line with the odds closest to even money, avoiding alternate lines.
+    """
     if df.empty:
         return df
-    
+
     if market_type == "over_under":
-        # Check if we can pivot
-        if 'Over' in df['Subject'].values or 'Under' in df['Subject'].values:
-            # Wrong extraction - Subject contains Over/Under
-            # Need to re-parse
-            return df
+        # 1. Extract bet type (Over/Under) and the betting line from the 'Proposition' column.
+        # The regex is improved to handle potential positive/negative signs in the line value.
+        extracted_data = df['Proposition'].str.extract(r'(Over|Under)\s+([+-]?[\d.]+)', expand=True)
+        df['Bet'] = extracted_data[0]
+        df['Line'] = extracted_data[1]
+
+        # Drop any rows where the extraction did not find a valid bet/line.
+        df.dropna(subset=['Bet', 'Line'], inplace=True)
+        if df.empty:
+            return pd.DataFrame()
+
+        # 2. Convert 'Line' and 'Odds' columns to numeric types for calculation.
+        # Handles unicode minus signs and converts odds to numbers.
+        df['Line'] = pd.to_numeric(df['Line'])
+        df['Odds'] = pd.to_numeric(df['Odds'].astype(str).str.replace('−', '-'))
+
+        # 3. Pivot the data to create pairs of Over/Under odds for each unique line for each team.
+        # This gives us all available betting options for each participant.
+        line_options = df.pivot_table(
+            index=['Subject', 'Line'],
+            columns='Bet',
+            values='Odds',
+            aggfunc='first'  # 'first' is safe here as there's one odd per selection
+        ).reset_index()
+
+        # Rename columns for clarity and drop lines that don't have both Over and Under odds.
+        line_options.rename(columns={'Over': 'Over Odds', 'Under': 'Under Odds'}, inplace=True)
+        line_options.dropna(subset=['Over Odds', 'Under Odds'], inplace=True)
+
+        if line_options.empty:
+            return pd.DataFrame() # Return empty if no valid pairs were found
+
+        # 4. Calculate a 'cost' for each line. The main line typically has odds closest
+        # to -110, meaning the sum of their absolute values will be the smallest.
+        line_options['cost'] = line_options['Over Odds'].abs() + line_options['Under Odds'].abs()
+
+        # 5. For each team ('Subject'), find the line with the minimum cost.
+        # This effectively selects the main betting line.
+        idx = line_options.groupby('Subject')['cost'].idxmin()
+        main_lines = line_options.loc[idx]
+
+        # 6. Format the final DataFrame for display.
+        main_lines = main_lines.rename(columns={'Subject': 'Participant'})
+        final_cols = ['Participant', 'Line', 'Over Odds', 'Under Odds']
         
-        # Extract bet type and line from proposition
-        df[['Bet', 'Line']] = df['Proposition'].str.extract(r'(Over|Under)\s+([\d.]+)', expand=True)
-        
-        if df['Bet'].notna().any():
-            # Pivot the data
-            pivot_df = df.pivot_table(
-                index='Subject',
-                columns='Bet',
-                values=['Line', 'Odds'],
-                aggfunc='first'
-            ).reset_index()
-            
-            # Flatten columns
-            pivot_df.columns = [' '.join(col).strip() if col[1] else col[0] for col in pivot_df.columns.values]
-            
-            # Rename and reorder
-            column_mapping = {
-                'Subject': 'Participant',
-                'Line Over': 'Line',
-                'Odds Over': 'Over Odds',
-                'Odds Under': 'Under Odds'
-            }
-            pivot_df = pivot_df.rename(columns=column_mapping)
-            
-            # Select final columns
-            final_cols = ['Participant', 'Line', 'Over Odds', 'Under Odds']
-            available_cols = [col for col in final_cols if col in pivot_df.columns]
-            
-            return pivot_df[available_cols]
-    
+        # Ensure data types are correct for the final output
+        main_lines['Over Odds'] = main_lines['Over Odds'].astype(int)
+        main_lines['Under Odds'] = main_lines['Under Odds'].astype(int)
+
+        return main_lines[final_cols].reset_index(drop=True)
+
+    # Return the original dataframe if the market type is not 'over_under'.
     return df
 
 # --- GUI APPLICATION WITH ENHANCED FEATURES ---
